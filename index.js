@@ -1,3 +1,4 @@
+const dontenv = require('dotenv').config();
 const {ApolloServer, gql} = require('apollo-server');
 const schema = require('./src/schema');
 const WpRestApi = require('./src/wp-rest-api');
@@ -22,5 +23,5 @@ const apolloServer = new ApolloServer({
 
 // The `listen` method launches a web server.
 apolloServer.listen().then(({url}) => {
-    console.log(`🚀  Server ready at ${url}`, process.env.BASE_URL);
+    console.log(`🚀  Server ready at ${url}`);
 });

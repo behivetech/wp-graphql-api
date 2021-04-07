@@ -7,7 +7,7 @@
         "doc": "docs"
     },
     "scripts": {
-        "start": "nodemon src/index.js"
+        "start": "nodemon -r dotenv/config index.js"
     },
     "author": "BEhiveTech",
     "license": "ISC",

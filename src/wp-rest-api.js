@@ -1,28 +1,36 @@
 const {RESTDataSource} = require('apollo-datasource-rest');
-const {BASE_URL, WP_ACCESS_TOKEN} = './constants';
+const {WP_BASE_URL, WP_ACCESS_TOKEN} = process.env;
+const {ApolloError} = require('apollo-server');
 
 class WpRestApi extends RESTDataSource {
     constructor() {
         super();
-        this.baseURL = 'http://localhost:8000/wp-json/wp/v2/';
+        this.baseURL = WP_BASE_URL;
     }
 
     willSendRequest(request) {
-        request.headers.set(
-            'Authorization',
-            `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMCIsImlhdCI6MTYxNjc4NzM1OCwibmJmIjoxNjE2Nzg3MzU4LCJleHAiOjE2MTczOTIxNTgsImRhdGEiOnsidXNlciI6eyJpZCI6MSwidHlwZSI6IndwX3VzZXIiLCJ1c2VyX2xvZ2luIjoiYWRtaW4iLCJ1c2VyX2VtYWlsIjoib3RAYnNtaXRoc3R1ZGlvLmNvbSIsImFwaV9rZXkiOiIxOHBPQmdwZllHQ2FjYjRZY1ZwTXlvUFVzIn19fQ.FX2Ss2Hla5fnhkbt17CzDZkpONUs9Tjh47yRlhaNhAo`
-        );
+        request.headers.set('Authorization', `Bearer ${WP_ACCESS_TOKEN}`);
     }
 
-    // an example making an HTTP POST request
-    async posts() {
-        console.log(BASE_URL, WP_ACCESS_TOKEN, process.env.BASE_URL)
-        return this.get(`posts`);
+    async readData(dataTable, recordId) {
+        try {
+            const path = recordId ? `${dataTable}/${recordId}` : dataTable;
+            return this.get(path);
+        } catch (error) {
+            throw new ApolloError(`Could not retrieve ${dataTable}.`, 503, {error});
+        }
     }
 
-    // not complete yet.
-    async deletePost(postId) {
-        return 'deleted';
+    async cudData({action, dataTable, recordId, formData}) {
+        try {
+            await this[action](`${dataTable}/${recordId}`, formData);
+            return this.get(`${dataTable}/${recordId}`);
+        } catch (error) {
+            throw new ApolloError(`Could not retrieve ${dataTable}.`, 503, {
+                error,
+                recordId,
+            });
+        }
     }
 }
 

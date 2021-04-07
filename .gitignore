@@ -1,3 +1,6 @@
+key-pair.json
+token.json
+
 # dependencies
 /node_modules
 /.pnp
