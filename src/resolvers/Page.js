@@ -1,4 +1,4 @@
-function cleanPostKeys(record) {
+function cleanPageKeys(record) {
     const {
         _links,
         comment_status,
@@ -10,11 +10,10 @@ function cleanPostKeys(record) {
     } = record;
     const {
         'wp:attachment': wpAttachment,
-        'wp:term': wpTerm,
         'version-history': versionHistory,
         ...linkRest
     } = _links;
-    const links = {...linkRest, versionHistory, wpAttachment, wpTerm};
+    const links = {...linkRest, versionHistory, wpAttachment};
 
     return {
         ...rest,
@@ -29,32 +28,32 @@ function cleanPostKeys(record) {
 
 const resolver = {
     QUERY: {
-        posts: async (parent, args, {dataSources}) => {
-            const posts = await dataSources.wpRestApi.readData('posts', args?.id);
+        pages: async (parent, args, {dataSources}) => {
+            const pages = await dataSources.wpRestApi.readData('pages', args?.id);
 
-            return posts.map(cleanPostKeys);
+            return pages.map(cleanPageKeys);
         },
     },
     MUTATION: {
-        postDelete: async (parent, args, {dataSources}) => {
+        pageDelete: async (parent, args, {dataSources}) => {
             const response = await dataSources.wpRestApi.cudData({
                 action: 'delete',
-                dataTable: 'posts',
+                dataTable: 'pages',
                 recordId: args.id,
             });
 
-            return cleanPostKeys(response);
+            return cleanPageKeys(response);
         },
-        postUpdate: async (parent, args, {dataSources}) => {
+        pageUpdate: async (parent, args, {dataSources}) => {
             const {id: recordId, ...formData} = args.input;
             const response = await dataSources.wpRestApi.cudData({
                 action: 'put',
-                dataTable: 'posts',
+                dataTable: 'pages',
                 recordId,
                 formData,
             });
 
-            return cleanPostKeys(response);
+            return cleanPageKeys(response);
         },
     },
 };

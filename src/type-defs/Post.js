@@ -1,10 +1,11 @@
 const PostDefs = `
     extend type Query {
-        posts: [Post]
+        posts(id: String): [Post]
     }
 
     extend type Mutation {
-        postDelete(id: String): String
+        postDelete(id: String!): Post
+        postUpdate(input: PostInput!): Post
     }
 
     type Post {
@@ -23,7 +24,7 @@ const PostDefs = `
         meta: [String]
         modified: String
         modifiedGmt: String
-        ping_status: String
+        pingStatus: String
         slug: String
         status: String
         sticky: Boolean
@@ -31,6 +32,12 @@ const PostDefs = `
         template: String
         title: PostTitle
         type: String
+    }
+
+    input PostInput {
+        id: String!
+        content: String
+        title: String
     }
 
     type PostTitle {

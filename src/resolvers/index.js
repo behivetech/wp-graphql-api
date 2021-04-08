@@ -1,10 +1,16 @@
+const pageResolver = require('./Page');
 const postResolver = require('./Post');
+const userResolver = require('./User');
 
 module.exports = {
     Query: {
-      ...postResolver.QUERY,
+        ...pageResolver.QUERY,
+        ...postResolver.QUERY,
+        ...userResolver.QUERY,
     },
     Mutation: {
-      ...postResolver.MUTATION,
+        ...pageResolver.MUTATION,
+        ...postResolver.MUTATION,
+        ...userResolver.MUTATION,
     },
 };
