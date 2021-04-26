@@ -1,6 +1,6 @@
 ## WordPress Setup With JWT Token for Application
 
-This documentation of the complete setup of WordPress in Docker and adding the JWT Token to refer back to if needed.
+This documentation of the complete setup of WordPress in Docker and adding the JWT Token. If running the docker build or compose, most likely this will not be needed. It's here to refer back to see how it was done.
 
 ### Set up Wordpress in Docker environment...
 
@@ -55,7 +55,7 @@ https://github.com/WP-API/jwt-auth
 1. Download the key-pair
 1. Generate and download new tokens, as well by going to
     ```
-    curl -X POST https://example.org/wp-json/wp/v2/token \
+    curl -X POST https://localhost:8000/wp-json/wp/v2/token \
         -F api_key=<api key from the key-pair file> \
         -F api_secret=<api secret from the key-pair file>
     ```

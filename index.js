@@ -1,7 +1,8 @@
 const dontenv = require('dotenv').config();
 const {ApolloServer, gql} = require('apollo-server');
 const schema = require('./src/schema');
-const WpRestApi = require('./src/wp-rest-api');
+const WpRestApi = require('./src/datasources/wp-rest-api');
+const OauthRestApi = require('./src/datasources/oauth-rest-api');
 
 // Setup .env
 // const path = require('path');
@@ -11,6 +12,7 @@ const apolloServer = new ApolloServer({
     dataSources: () => {
         return {
             wpRestApi: new WpRestApi(),
+            oauthRestApi: new OauthRestApi(),
         };
     },
     context: (apolloContext) => {

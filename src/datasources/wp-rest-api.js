@@ -12,10 +12,21 @@ class WpRestApi extends RESTDataSource {
         request.headers.set('Authorization', `Bearer ${WP_ACCESS_TOKEN}`);
     }
 
-    async readData(dataTable, recordId) {
+    async readData(dataTable, recordId, params) {
         try {
             const path = recordId ? `${dataTable}/${recordId}` : dataTable;
-            return this.get(path);
+            const queryString = params
+                ? Object.keys(params)
+                      .map(
+                          (key) =>
+                              `${encodeURIComponent(key)}=${encodeURIComponent(
+                                  params[key]
+                              )}`
+                      )
+                      .join('&')
+                : '';
+
+            return this.get(`${path}?${queryString}`);
         } catch (error) {
             throw new ApolloError(`Could not retrieve ${dataTable}.`, 503, {error});
         }

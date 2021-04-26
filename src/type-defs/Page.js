@@ -1,6 +1,6 @@
 const PageDefs = `
     extend type Query {
-        pages(id: String): [Page]
+        pages(id: String, slug: String): [Page]
     }
 
     extend type Mutation {

@@ -1,0 +1,3 @@
+curl -X POST https://localhost:8000/wp-json/wp/v2/token -F api_key=1rcsicVtTe6wQTuXKBUw29O58 -F api_secret=b1WCyh0gWMhRKLT%GF&5k%^gN5r4xL*i
+
+curl -X GET https://localhost:8000/wp-json/wp/v2/posts -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMCIsImlhdCI6MTYxNzM2NjE3OSwibmJmIjoxNjE3MzY2MTc5LCJleHAiOjE2MTc5NzA5NzksImRhdGEiOnsidXNlciI6eyJpZCI6MSwidHlwZSI6IndwX3VzZXIiLCJ1c2VyX2xvZ2luIjoib3RAYnNtaXRoc3R1ZGlvLmNvbSIsInVzZXJfZW1haWwiOiJvdEBic21pdGhzdHVkaW8uY29tIiwiYXBpX2tleSI6IjFyY3NpY1Z0VGU2d1FUdVhLQlV3MjlPNTgifX19.3X8mSmHDI_ZfxJYxC0i7cFcU6EMzxJkX5Qi3uuyxm3M'

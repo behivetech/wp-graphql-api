@@ -28,8 +28,9 @@ function cleanPageKeys(record) {
 
 const resolver = {
     QUERY: {
-        pages: async (parent, args, {dataSources}) => {
-            const pages = await dataSources.wpRestApi.readData('pages', args?.id);
+        pages: async (parent, args = {}, {dataSources}) => {
+            const {id, ...restArgs} = args;
+            const pages = await dataSources.wpRestApi.readData('pages', id, restArgs);
 
             return pages.map(cleanPageKeys);
         },
